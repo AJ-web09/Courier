@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block title %}Track Package - Swift Courier{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Track Your Package</h1>
+        <p>Enter your tracking number to get real-time updates on your shipment</p>
+    </div>
+</div>
+
+<!-- Track Images Section -->
+<section class="image-section track-images">
+    <div class="container">
+        <div class="image-grid">
+            <div class="image-card">
+                <img src="https://plus.unsplash.com/premium_photo-1667518228939-5d897e4fce81?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGNvdXJpZXIlMjBQcm9mZXNzaW9uYWwlMjBsb2dpc3RpY3MlMjBleHBlcnRzfGVufDB8fDB8fHww" alt="Package Processing">
+                <div class="image-overlay">
+                    <h3>Package Processing</h3>
+                    <p>Advanced scanning technology</p>
+                </div>
+            </div>
+            <div class="image-card large">
+                <img src="https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=600&h=400&fit=crop" alt="Package Delivery">
+                <div class="image-overlay">
+                    <h3>On Time Delivery</h3>
+                    <p>Door-to-door service</p>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://plus.unsplash.com/premium_photo-1682146662576-900a71864a11?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGNvdXJpZXJ8ZW58MHx8MHx8fDA%3D" alt="Package Received">
+                <div class="image-overlay">
+                    <h3>Package Received</h3>
+                    <p>Signed for your peace of mind</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="track-section">
+    <div class="container">
+        <div class="track-search">
+            <h2>Enter Your Tracking Number</h2>
+            <p>Track your package in real-time</p>
+            <form id="track-form" class="track-form">
+                <div class="input-group">
+                    <input type="text" id="tracking-number" placeholder="Enter tracking number (e.g., CRG001, CRG002, CRG003)" required>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Track</button>
+                </div>
+            </form>
+            <p class="track-hint">Try: CRG001 (Delivered), CRG002 (In Transit), CRG003 (Processing)</p>
+        </div>
+
+        <div id="tracking-result" class="tracking-result-container">
+            <!-- Results will be displayed here -->
+        </div>
+
+        <div class="tracking-tips">
+            <h3><i class="fas fa-lightbulb"></i> Tracking Tips</h3>
+            <ul>
+                <li>Tracking numbers are case-insensitive</li>
+                <li>Updates may take 24-48 hours after shipment</li>
+                <li>For multiple packages, enter each tracking number separately</li>
+                <li>Contact customer support if your package hasn't been updated in 3 days</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="container">
+        <h2 class="section-title">How Tracking Works</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-barcode"></i>
+                <h3>Scan</h3>
+                <p>Your package is scanned at each checkpoint using advanced barcode technology.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-satellite-dish"></i>
+                <h3>Update</h3>
+                <p>Status updates are uploaded in real-time to our tracking system.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bell"></i>
+                <h3>Notify</h3>
+                <p>Receive notifications via email or SMS at every milestone.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-check-circle"></i>
+                <h3>Deliver</h3>
+                <p>Your package arrives safely at its destination.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <h2>Need More Help?</h2>
+        <p>Our customer support team is available 24/7 to assist you with any tracking inquiries.</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-primary">Contact Support</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('track-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const trackingNumber = document.getElementById('tracking-number').value;
+        const resultContainer = document.getElementById('tracking-result');
+        
+        resultContainer.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Searching...</div>';
+        
+        try {
+            const response = await fetch('/api/track', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tracking_number: trackingNumber })
+            });
+            const data = await response.json();
+            
+            if (data.error) {
+                resultContainer.innerHTML = `
+                    <div class="error-result">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>Package Not Found</h3>
+                        <p>${data.error}</p>
+                    </div>
+                `;
+            } else {
+                const statusClass = data.status.toLowerCase().replace(/\s+/g, '-');
+                const historyHTML = data.history.map((item, index) => `
+                    <div class="timeline-item ${index === 0 ? 'current' : ''}">
+                        <div class="timeline-marker">
+                            <i class="fas fa-circle"></i>
+                        </div>
+                        <div>
+                            <div class="timeline-date">${item.date}</div>
+                            <div class="timeline-status">${item.status}</div>
+                            <div class="timeline-location"><i class="fas fa-map-marker-alt"></i> ${item.location}</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                resultContainer.innerHTML = `
+                    <div class="result-card">
+                        <div class="result-header">
+                            <div class="tracking-number">Tracking: ${trackingNumber.toUpperCase()}</div>
+                            <div class="status-badge ${statusClass}">${data.status}</div>
+                        </div>
+                        <div class="shipment-info">
+                            <div class="info-item">
+                                <i class="fas fa-plane-departure"></i>
+                                <div>
+                                    <span class="label">Origin</span>
+                                    <span class="value">${data.origin}</span>
+                                </div>
+                            </div>
+                            <div class="info-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-plane-arrival"></i>
+                                <div>
+                                    <span class="label">Destination</span>
+                                    <span class="value">${data.destination}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="delivery-info">
+                            <div class="delivery-item">
+                                <span class="label">Current Location</span>
+                                <span class="value">${data.current_location}</span>
+                            </div>
+                            <div class="delivery-item">
+                                <span class="label">Estimated Delivery</span>
+                                <span class="value">${data.estimated_delivery || 'Calculating...'}</span>
+                            </div>
+                            ${data.actual_delivery ? `
+                            <div class="delivery-item delivered">
+                                <span class="label">Delivered On</span>
+                                <span class="value">${data.actual_delivery}</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                        <div class="timeline-section">
+                            <h3>Shipment Timeline</h3>
+                            ${historyHTML}
+                        </div>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            resultContainer.innerHTML = `
+                <div class="error-result">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Error Occurred</h3>
+                    <p>Please try again later.</p>
+                </div>
+            `;
+        }
+    });
+</script>
+{% endblock %}

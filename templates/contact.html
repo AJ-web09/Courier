@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - Swift Courier{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>We'd love to hear from you. Get in touch with our team.</p>
+    </div>
+</div>
+
+<!-- Contact Images Section -->
+<section class="image-section contact-images">
+    <div class="container">
+        <div class="image-grid">
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&h=400&fit=crop" alt="Our Office">
+                <div class="image-overlay">
+                    <h3>Headquarters</h3>
+                    <p>New York, NY</p>
+                </div>
+            </div>
+            <div class="image-card large">
+                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=600&h=400&fit=crop" alt="Customer Support">
+                <div class="image-overlay">
+                    <h3>24/7 Support</h3>
+                    <p>Always here to help</p>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=600&h=400&fit=crop" alt="Team Meeting">
+                <div class="image-overlay">
+                    <h3>Dedicated Team</h3>
+                    <p>Ready to assist you</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="contact-section">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <p>Have questions about our services? Need a custom shipping solution? Our team is ready to help you with all your delivery needs.</p>
+                
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Address</h3>
+                            <p>123 Delivery Street, New York, NY 10001</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <h3>Phone</h3>
+                            <p>1-800-SWIFT-COURIER</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>info@swiftcourier.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-wrapper">
+                {% if success %}
+                <div class="success-message">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Thank You, {{ name }}!</h3>
+                    <p>Your message has been received. We'll get back to you shortly.</p>
+                </div>
+                {% else %}
+                <form class="contact-form" method="POST" action="{{ url_for('contact') }}">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email address">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a subject</option>
+                            <option value="general">General Inquiry</option>
+                            <option value="shipping">Shipping Quote</option>
+                            <option value="tracking">Tracking Assistance</option>
+                            <option value="complaint">File a Complaint</option>
+                            <option value="partnership">Business Partnership</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="How can we help you?"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="map-section">
+    <div class="container">
+        <div class="map-placeholder">
+            <i class="fas fa-map-marked-alt"></i>
+            <h3>Visit Our Headquarters</h3>
+            <p>123 Delivery Street, New York, NY 10001</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

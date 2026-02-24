@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Swift Courier - Fast & Reliable Delivery{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>Fast & Reliable Courier Services</h1>
+        <p>Delivering excellence across the globe with speed, safety, and precision.</p>
+        <div class="hero-buttons">
+            <a href="{{ url_for('track') }}" class="btn btn-primary"><i class="fas fa-search"></i> Track Package</a>
+            <a href="{{ url_for('services') }}" class="btn btn-secondary">Our Services</a>
+        </div>
+    </div>
+    <div class="hero-overlay"></div>
+</section>
+
+<section class="tracking-section">
+    <div class="container">
+        <div class="tracking-box">
+            <h2>Track Your Package</h2>
+            <p>Enter your tracking number to get real-time updates</p>
+            <form id="quick-track-form" class="tracking-form">
+                <input type="text" id="tracking-input" placeholder="Enter tracking number (e.g., CRG001)" required>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Track</button>
+            </form>
+            <div id="quick-result" class="tracking-result"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Image Section -->
+<section class="image-section">
+    <div class="container">
+        <div class="image-grid">
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1620455800201-7f00aeef12ed?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Y291cmllcnxlbnwwfHwwfHx8MA%3D%3D" alt="Delivery Truck">
+                <div class="image-overlay">
+                    <h3>Fast Delivery</h3>
+                    <p>On-time delivery guaranteed</p>
+                </div>
+            </div>
+            <div class="image-card large">
+                <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=600&h=400&fit=crop" alt="Warehouse">
+                <div class="image-overlay">
+                    <h3>Secure Warehousing</h3>
+                    <p>State-of-the-art storage facilities</p>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://plus.unsplash.com/premium_photo-1755001218706-9738406ccc55?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y291cmllciUyMGdsb2JhbCUyMG5ldHdvcmt8ZW58MHx8MHx8fDA%3D" alt="Global Shipping">
+                <div class="image-overlay">
+                    <h3>Global Network</h3>
+                    <p>200+ countries served</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="container">
+        <h2 class="section-title">Why Choose Us</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-shipping-fast"></i>
+                <h3>Fast Delivery</h3>
+                <p>Same-day and next-day delivery options available for urgent shipments.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Secure Handling</h3>
+                <p>Your packages are insured and handled with utmost care throughout the journey.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-globe"></i>
+                <h3>Global Reach</h3>
+                <p>Delivery services to over 200 countries worldwide.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-clock"></i>
+                <h3>24/7 Support</h3>
+                <p>Round-the-clock customer support to assist you anytime.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="stats">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <i class="fas fa-package"></i>
+                <h3>1M+</h3>
+                <p>Packages Delivered</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-users"></i>
+                <h3>50K+</h3>
+                <p>Happy Customers</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-globe-americas"></i>
+                <h3>200+</h3>
+                <p>Countries Served</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-truck"></i>
+                <h3>1000+</h3>
+                <p>Vehicles</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <h2>Ready to Ship?</h2>
+        <p>Get a quote for your shipment today and experience the Swift difference.</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-primary">Get a Quote</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('quick-track-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const trackingNumber = document.getElementById('tracking-input').value;
+        const resultDiv = document.getElementById('quick-result');
+        
+        resultDiv.innerHTML = '<p class="loading"><i class="fas fa-spinner fa-spin"></i> Tracking...</p>';
+        
+        try {
+            const response = await fetch('/api/track', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tracking_number: trackingNumber })
+            });
+            const data = await response.json();
+            
+            if (data.error) {
+                resultDiv.innerHTML = `<p class="error">${data.error}</p>`;
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="result-content">
+                        <p><strong>Status:</strong> <span class="status-${data.status.toLowerCase().replace(' ', '-')}">${data.status}</span></p>
+                        <p><strong>Current Location:</strong> ${data.current_location}</p>
+                        <p><strong>Destination:</strong> ${data.destination}</p>
+                        <p><strong>ETA:</strong> ${data.estimated_delivery || 'N/A'}</p>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            resultDiv.innerHTML = '<p class="error">An error occurred. Please try again.</p>';
+        }
+    });
+</script>
+{% endblock %}

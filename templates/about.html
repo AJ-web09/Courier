@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - Swift Courier{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>About Us</h1>
+        <p>Your trusted partner in global logistics since 2010</p>
+    </div>
+</div>
+
+<!-- About Images Section -->
+<section class="image-section about-images">
+    <div class="container">
+        <div class="image-grid">
+            <div class="image-card">
+                <img src="https://media.istockphoto.com/id/1638276602/photo/portrait-of-a-smiling-warehouse-staff-listening-and-talking-to-a-customer-using-a-headset.webp?a=1&b=1&s=612x612&w=0&k=20&c=jW0qK6d9QdqRQdpp4iqS_4noHUWHP3gJszgUmXwpDs8=" alt="Our Team">
+                <div class="image-overlay">
+                    <h3>Expert Team</h3>
+                    <p>Professional logistics experts</p>
+                </div>
+            </div>
+            <div class="image-card large">
+                <img src="https://images.unsplash.com/photo-1581392591656-3efbeca21328?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGNvdXJpZXIlMjBTdGF0ZS1vZi10aGUtYXJ0JTIwaW5mcmFzdHJ1Y3R1cmV8ZW58MHx8MHx8fDA%3D" alt="Our Warehouse">
+                <div class="image-overlay">
+                    <h3>Modern Facilities</h3>
+                    <p>State-of-the-art infrastructure</p>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=600&h=400&fit=crop" alt="Delivery Fleet">
+                <div class="image-overlay">
+                    <h3>Global Fleet</h3>
+                    <p>1000+ vehicles worldwide</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about-section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Delivering Excellence Since 2010</h2>
+                <p>AJ Swift Courier was founded with a simple mission: to make package delivery fast, reliable, and accessible to everyone. What started as a small local delivery service has grown into a global logistics powerhouse.</p>
+                <p>Today, we pride ourselves on our extensive network that spans over 200 countries, our fleet of over 1,000 vehicles, and our team of dedicated professionals who ensure every package arrives safely and on time.</p>
+                <p>Our commitment to innovation has led us to develop cutting-edge tracking technology, eco-friendly delivery solutions, and customer-centric services that set us apart in the industry.</p>
+                <a href="{{ url_for('contact') }}" class="btn btn-primary">Get in Touch</a>
+            </div>
+            <div class="about-image">
+                <i class="fas fa-shipping-fast"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="values-section">
+    <div class="container">
+        <h2 class="section-title">Our Core Values</h2>
+        <div class="values-grid">
+            <div class="value-card">
+                <i class="fas fa-handshake"></i>
+                <h3>Trust</h3>
+                <p>We build lasting relationships through transparency, reliability, and honest communication.</p>
+            </div>
+            <div class="value-card">
+                <i class="fas fa-rocket"></i>
+                <h3>Innovation</h3>
+                <p>Constantly improving our technology and processes to serve you better.</p>
+            </div>
+            <div class="value-card">
+                <i class="fas fa-heart"></i>
+                <h3>Customer Focus</h3>
+                <p>Your needs are our priority. Every decision we make considers your satisfaction.</p>
+            </div>
+            <div class="value-card">
+                <i class="fas fa-leaf"></i>
+                <h3>Sustainability</h3>
+                <p>Committed to reducing our environmental footprint through green logistics solutions.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section with Images -->
+<section class="team-section">
+    <div class="container">
+        <h2 class="section-title">Meet Our Leadership</h2>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>AJ Michael</h3>
+                <p class="team-role">CEO & Founder</p>
+                <p class="team-bio">20+ years in logistics, visionary leader driving Swift Couriers growth.</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>AJ Ambrose</h3>
+                <p class="team-role">COO</p>
+                <p class="team-bio">Operations expert ensuring seamless delivery operations globally.</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>AJ Kelechi</h3>
+                <p class="team-role">CTO</p>
+                <p class="team-bio">Technology innovator behind our cutting-edge tracking systems.</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>AJ Mike</h3>
+                <p class="team-role">Head of Customer Service</p>
+                <p class="team-bio">Dedicated to providing exceptional support to all our clients.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="milestones-section">
+    <div class="container">
+        <h2 class="section-title">Our Journey</h2>
+        <div class="timeline">
+            <div class="milestone">
+                <div class="milestone-year">2010</div>
+                <div class="milestone-content">
+                    <h3>Company Founded</h3>
+                    <p>Started as a small local delivery service in Enugu with just 5 vehicles.</p>
+                </div>
+            </div>
+            <div class="milestone">
+                <div class="milestone-year">2015</div>
+                <div class="milestone-content">
+                    <h3>National Expansion</h3>
+                    <p>Expanded operations across the Imo state with 200+ vehicles.</p>
+                </div>
+            </div>
+            <div class="milestone">
+                <div class="milestone-year">2018</div>
+                <div class="milestone-content">
+                    <h3>International Launch</h3>
+                    <p>Began international shipping to 50+ countries worldwide.</p>
+                </div>
+            </div>
+            <div class="milestone">
+                <div class="milestone-year">2024</div>
+                <div class="milestone-content">
+                    <h3>Global Leader</h3>
+                    <p>Now serving 200+ countries with 1,000+ vehicles and 1M+ packages delivered.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <h2>Join Our Success Story</h2>
+        <p>Whether you need local delivery or international shipping, we're here to help.</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-primary">Contact Us</a>
+    </div>
+</section>
+{% endblock %}
